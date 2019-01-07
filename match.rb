@@ -1,5 +1,7 @@
-require './seeds'
+require 'logger'
+
 require './match_algorithm'
+require './seeds'
 
 def match
   seed_info = create_seed_data
@@ -10,37 +12,43 @@ def match
 end
 
 def print_results(results, applicant_info, program_info)
-  puts('Pre Match Information')
-  puts('---------------------')
+  logger = Logger.new(STDOUT)
+  logger.level = Logger::INFO
+  logger.formatter = proc do |_severity, _time, _progname, msg|
+    "#{msg}\n"
+  end
+
+  logger.info('Pre Match Information')
+  logger.info('---------------------')
   # TODO
   applicant_info.each do |applicant, applicant_rank_list|
-    puts("\t#{applicant} rank list:")
+    logger.info("\t#{applicant} rank list:")
     applicant_rank_list.each do |program|
-      puts("\t\t#{program}")
+      logger.info("\t\t#{program}")
     end
   end
 
   program_info.each do |program, info|
-    puts("\t#{program} rank list (#{info[:limit]} spots:")
+    logger.info("\t#{program} rank list (#{info[:limit]} spots:")
     info[:list].each do |applicant|
-      puts("\t\t#{applicant}")
+      logger.info("\t\t#{applicant}")
     end
   end
 
-  puts('')
-  puts('Applicant Results')
-  puts('----------')
+  logger.info('')
+  logger.info('Applicant Results')
+  logger.info('----------')
   results[:applicants].each do |applicant, program|
-    puts("\t#{applicant}: #{program}")
+    logger.info("\t#{applicant}: #{program}")
   end
 
-  puts('')
-  puts('Programs Results')
-  puts('----------------')
+  logger.info('')
+  logger.info('Programs Results')
+  logger.info('----------------')
   results[:programs].each do |program, admitted_applicants|
-    puts("\t#{program}:")
+    logger.info("\t#{program}:")
     admitted_applicants.each do |applicant|
-      puts("\t\t#{applicant}")
+      logger.info("\t\t#{applicant}")
     end
   end
 end
