@@ -13,7 +13,7 @@ ruby match.rb
 
 ## Tests
 ```
-rspec spec/*
+rspec
 ```
 
 ## Algorithm
