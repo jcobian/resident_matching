@@ -77,16 +77,25 @@ end
 def lesser_ranked_applicant_for_program(program_ranked_list,
                                         program_current_residents,
                                         potential_applicant)
-  # return potential_applicant if this applicant would be last in current list
-  # otherwise, return the last applicant in the current residens list
+  # return potential_applicant if this applicant would be
+  # last in the program's current list
+  # otherwise, return the applicant who is last in the program's current list
   rank = program_ranked_list.index(potential_applicant)
   return potential_applicant if rank.nil? # program did not rank this applicant
 
+  least_ranked_applicant = potential_applicant
+  least_rank = rank
   program_current_residents.each do |resident|
     residents_rank = program_ranked_list.index(resident)
-    return resident if rank < residents_rank
+    next unless residents_rank > least_rank
+
+    least_ranked_applicant = resident
+    least_rank = residents_rank
+    # early return if this is the program's very last ranked applicant
+    # because we know no one else can be ranked lower
+    return least_ranked_applicant if least_rank == program_ranked_list.length
   end
-  potential_applicant
+  least_ranked_applicant
 end
 
 def program_wants_and_can_take_applicant?(program_info,
