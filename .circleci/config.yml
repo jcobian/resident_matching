@@ -28,6 +28,10 @@ jobs:
             - ./vendor/bundle
           key: v2-dependencies-{{ checksum "Gemfile.lock" }}
       - run:
+          name: Run rubocop
+          command: |
+            bundler exec rubocop
+      - run:
           name: Run rspec tests
           command: |
             mkdir /tmp/test-results
@@ -38,10 +42,6 @@ jobs:
                             --out /tmp/test-results/rspec.xml \
                             --format progress \
                             $TEST_FILES
-      - run:
-          name: Run rubocop
-          command: |
-            bundler exec rubocop --out /tmp/test-results/rubocop.txt
       # collect reports
       - store_test_results:
           path: /tmp/test-results
