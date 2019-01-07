@@ -1,6 +1,8 @@
 # Resident Match
 Implementing the [Resident Matching algorithm](https://en.wikipedia.org/wiki/National_Resident_Matching_Program#Matching_algorithm)
 
+[![CircleCI](https://circleci.com/gh/jcobian/resident_matching.svg?style=svg)](https://circleci.com/gh/jcobian/resident_matching)
+
 ## Usage
 
 ### Run the match
